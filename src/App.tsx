@@ -3,75 +3,30 @@ import AppBar from './AppBar';
 
 import SwitchDarkMode from './SwitchDarkMode';
 
-type Gratitudes = {
+type Gratitude = {
+  id: number;
   date: Date;
-  gratitudes: string[];
+  gratitude: string;
 };
-
-let gratitudesMockData: Gratitudes[] = [
-  {
-    date: new Date('2025-03-01'),
-    gratitudes: ['I am grateful for my family', 'I am grateful for a delicious meal', 'I am grateful for sunny weather']
-  },
-  {
-    date: new Date('2025-03-02'),
-    gratitudes: ['I am grateful for good books', 'I am grateful for music', 'I am grateful for my home']
-  },
-  {
-    date: new Date('2025-03-03'),
-    gratitudes: ['I am grateful for my friends', 'I am grateful for my health', 'I am grateful for new opportunities']
-  }
-];
 
 function App() {
   useEffect(() => {
     window.Main.removeLoading();
   }, []);
   const [date, setDate] = useState<Date>(new Date());
-  const [gratitudes, setGratitudes] = useState<string[]>([]);
-  const [gratitude, setGratitude] = useState<string>('');
-
-  useEffect(() => {
-    const gratitudesForDate = getGratitudesForDate(date);
-    setGratitudes(gratitudesForDate?.gratitudes || []);
-  }, [date]);
-
-  const getGratitudesForDate = (date: Date) => {
-    return gratitudesMockData.find((gratitude) => gratitude.date.toLocaleDateString() === date.toLocaleDateString());
-  };
-
-  const saveGratitudes = () => {
-    const updatedGratitudesMockData = gratitudesMockData.map((g) => {
-      if (g.date.toLocaleDateString() === date.toLocaleDateString()) {
-        return { ...g, gratitudes };
-      }
-      return g;
-    });
-
-    // If no existing entry for this date, add a new one
-    if (!updatedGratitudesMockData.find((g) => g.date.toLocaleDateString() === date.toLocaleDateString())) {
-      updatedGratitudesMockData.push({
-        date: new Date(date),
-        gratitudes
-      });
-    }
-
-    // Update the mock data
-    gratitudesMockData = updatedGratitudesMockData;
-  };
+  const [newGratitude, setNewGratitude] = useState<string>('');
+  const [gratitudes, setGratitudes] = useState<Gratitude[]>([]);
 
   const addGratitude = (gratitude: string) => {
-    setGratitudes([...gratitudes, gratitude]);
-    setGratitude('');
+    setGratitudes([...gratitudes, { id: gratitudes.length + 1, date, gratitude }]);
+    setNewGratitude('');
   };
 
-  const removeGratitude = (index: number) => {
-    setGratitudes(gratitudes.filter((_, i) => i !== index));
+  const removeGratitude = (id: number) => {
+    setGratitudes(gratitudes.filter((gratitude) => gratitude.id !== id));
   };
 
   const changeDate = (direction: 'prev' | 'next') => {
-    saveGratitudes();
-
     const newDate = new Date(date);
     newDate.setDate(newDate.getDate() + (direction === 'prev' ? -1 : 1));
 
@@ -109,31 +64,36 @@ function App() {
             </div>
           </div>
           <div className="flex flex-col space-y-1 w-1/2">
-            {gratitudes.map((gratitude, index) => (
-              <div key={index} className="px-4 dark:text-gray-200 flex justify-between gap-32">
-                {index + 1}. {gratitude}
-                <div className="text-red-500 hover:text-white cursor-pointer" onClick={() => removeGratitude(index)}>
-                  X
+            {gratitudes
+              .filter((gratitude) => gratitude.date.toLocaleDateString() === date.toLocaleDateString())
+              .map((gratitude, index) => (
+                <div key={gratitude.id} className="px-4 dark:text-gray-200 flex justify-between gap-32">
+                  {index + 1}. {gratitude.gratitude}
+                  <div
+                    className="text-red-500 hover:text-white cursor-pointer"
+                    onClick={() => removeGratitude(gratitude.id)}
+                  >
+                    X
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
           <div className="flex gap-2">
             <input
               type="text"
               placeholder="I am grateful for..."
               className="px-4 py-2 rounded-md border dark:bg-slate-700 dark:border-slate-600 dark:text-gray-600"
-              value={gratitude}
-              onChange={(e) => setGratitude(e.target.value)}
+              value={newGratitude}
+              onChange={(e) => setNewGratitude(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  addGratitude(gratitude);
+                  addGratitude(newGratitude);
                 }
               }}
             />
             <button
               className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              onClick={() => addGratitude(gratitude)}
+              onClick={() => addGratitude(newGratitude)}
             >
               Add
             </button>
