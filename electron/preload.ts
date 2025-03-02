@@ -189,3 +189,7 @@ const api = {
 };
 
 contextBridge.exposeInMainWorld('Main', api);
+
+contextBridge.exposeInMainWorld('electronAPI', {
+  invoke: (channel: string, ...args: any[]) => ipcRenderer.invoke(channel, ...args)
+});

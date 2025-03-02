@@ -4,6 +4,7 @@ import { join } from 'path';
 // Packages
 import { BrowserWindow, app, ipcMain, IpcMainEvent, nativeTheme } from 'electron';
 import isDev from 'electron-is-dev';
+import { databaseApi } from './database';
 
 const height = 600;
 const width = 800;
@@ -80,4 +81,17 @@ app.on('window-all-closed', () => {
 ipcMain.on('message', (event: IpcMainEvent, message: any) => {
   console.log(message);
   setTimeout(() => event.sender.send('message', 'common.hiElectron'), 500);
+});
+
+// setup the gratitude api handlers
+ipcMain.handle('get-gratitudes', (_, date: string) => {
+  return databaseApi.getGratitudes(date);
+});
+
+ipcMain.handle('add-gratitude', (_, date: string, gratitude: string) => {
+  return databaseApi.addGratitude(date, gratitude);
+});
+
+ipcMain.handle('delete-gratitude', (_, id: number) => {
+  return databaseApi.deleteGratitude(id);
 });
