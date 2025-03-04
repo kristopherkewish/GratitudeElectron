@@ -23,7 +23,7 @@ export default function AddGratitude({ addGratitude }: { addGratitude: (gratitud
         }}
       />
       <button
-        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        className="px-4 py-2 bg-gratitudeBrown text-gratitudeWhite rounded-md hover:bg-gratitudeBrown/80 drop-shadow-md"
         onClick={handleAddGratitude}
       >
         Add

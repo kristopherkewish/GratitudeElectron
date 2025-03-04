@@ -3,18 +3,17 @@ import useGratitudes from './useGratitudes';
 import DatePicker from './DatePicker';
 import GratitudeList from './GratitudeList';
 import AddGratitude from './AddGratitude';
+import TargetAchieved from './TargetAchieved';
 
 export default function Gratitudes() {
   const { date, gratitudes, addGratitude, removeGratitude, changeDate } = useGratitudes();
-
-  const gratitudesByDate = gratitudes.filter(
-    (gratitude) => gratitude.date.toLocaleDateString() === date.toLocaleDateString()
-  );
+  const hasHitDailyTarget = gratitudes.length >= 5;
 
   return (
     <>
       <DatePicker date={date} changeDate={changeDate} />
-      <GratitudeList gratitudes={gratitudesByDate} removeGratitude={removeGratitude} />
+      <TargetAchieved hasHitDailyTarget={hasHitDailyTarget} />
+      <GratitudeList gratitudes={gratitudes} removeGratitude={removeGratitude} />
       <AddGratitude addGratitude={addGratitude} />
     </>
   );

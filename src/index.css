@@ -5,13 +5,13 @@
 
 /* For AppBar */
 .draggable {
-    -webkit-user-select: none;
-    -webkit-app-region: drag;
-  }
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
 
 .undraggable {
-    -webkit-app-region: no-drag;
-  }
+  -webkit-app-region: no-drag;
+}
 
 @layer base {
   code {
@@ -19,6 +19,12 @@
   }
 
   .root {
-    @apply min-h-screen dark:bg-slate-900 dark:text-gray-200;
+    @apply min-h-screen dark:bg-gratitudeBeige dark:text-gratitudeWhite rounded-xl overflow-hidden;
   }
+}
+
+/* Add this for rounded corners */
+body {
+  border-radius: 12px; /* Adjust the radius as needed */
+  overflow: hidden;
 }

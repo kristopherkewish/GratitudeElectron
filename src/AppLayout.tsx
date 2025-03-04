@@ -11,10 +11,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
       )}
       <div className="flex-auto">
-        <div className="ml-4 mr-4 mt-4 flex items-center justify-between">
-          <SwitchDarkMode />
-        </div>
-        <div className="flex flex-col justify-center items-center h-full pt-16 space-y-6">
+        <div className="flex flex-col justify-center items-center h-full pt-32 space-y-6">
           {children}
         </div>
       </div>

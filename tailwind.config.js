@@ -8,7 +8,12 @@ export default withMT({
     extend: {
       colors: {
         'slate-800': 'rgb(30 41 59)',
-        'slate-900': 'rgb(15 23 42)'
+        'slate-900': 'rgb(15 23 42)',
+        'gratitudeGreen1': '#CCD5AE',
+        'gratitudeGreen2': '#E9EDC9',
+        'gratitudeWhite': '#FEFAE0',
+        'gratitudeBeige': '#FAEDCD',
+        'gratitudeBrown': '#8E6C4B'
       }
     }
   },

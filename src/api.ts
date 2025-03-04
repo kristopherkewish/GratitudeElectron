@@ -16,7 +16,7 @@ export const api = {
 
   async addGratitude(date: Date, gratitude: string): Promise<Gratitude> {
     const dateStr = date.toISOString().split('T')[0];
-    return window.electronAPI.invoke('add-gratitude', { date: dateStr, gratitude });
+    return window.electronAPI.invoke('add-gratitude', dateStr, gratitude);
   },
 
   async deleteGratitude(id: number): Promise<void> {

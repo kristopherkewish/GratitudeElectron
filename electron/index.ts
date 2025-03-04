@@ -6,8 +6,14 @@ import { BrowserWindow, app, ipcMain, IpcMainEvent, nativeTheme } from 'electron
 import isDev from 'electron-is-dev';
 import { databaseApi } from './database';
 
-const height = 600;
+const height = 700;
 const width = 800;
+
+// Add this before creating the window
+if (process.platform === 'win32') {
+  app.commandLine.appendSwitch('enable-transparent-visuals');
+  app.commandLine.appendSwitch('disable-gpu');
+}
 
 function createWindow() {
   // Create the browser window.
@@ -19,9 +25,11 @@ function createWindow() {
     show: true,
     resizable: true,
     fullscreenable: true,
+    transparent: true,
     webPreferences: {
       preload: join(__dirname, 'preload.js')
-    }
+    },
+    icon: join(__dirname, '../src/assets/icons/favicon.ico')
   });
 
   const port = process.env.PORT || 3000;

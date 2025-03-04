@@ -10,9 +10,9 @@ export default function GratitudeList({
   return (
     <div className="flex flex-col space-y-1 w-1/2">
       {gratitudes.map((gratitude, index) => (
-        <div key={gratitude.id} className="px-4 dark:text-gray-200 flex justify-between gap-32">
+        <div key={gratitude.id} className="px-4 dark:text-gratitudeWhite flex justify-between gap-32 bg-gratitudeGreen1 rounded-md p-2 drop-shadow-sm">
           {index + 1}. {gratitude.gratitude}
-          <div className="text-red-500 hover:text-white cursor-pointer" onClick={() => removeGratitude(gratitude.id)}>
+          <div className="text-red-500 hover:text-gratitudeBrown cursor-pointer" onClick={() => removeGratitude(gratitude.id)}>
             X
           </div>
         </div>
